@@ -1,0 +1,40 @@
+digraph G {
+  label = "Research in Virtual Machines for Dynamically-Typed Languages"
+  labelloc = "t"
+  node [shape = "box"]
+
+  pic [label = "SELF Polymorphic Inline Caches (1991)"]
+  mpic [label = "Truffle Dispatch Chains (Multidimensional Inline Caches) (2015)"]
+
+  om [label = "Object Representation", shape="oval"]
+  maps [label = "SELF Maps (1989)"]
+  tosm [label = "Truffle Object Model (2014)"]
+  tso [label = "Truffle Thread-Safe Object Model (2016)"]
+
+  glsp [label = "Truffle Guest-Language Safepoints (2015)"]
+
+  collections [label = "Collections Representation", shape="oval"]
+  ss [label = "RPython Storage Strategies for Collections (2013)"]
+  tsc [label = "Truffle Thread-Safe Collections (2018)"]
+
+  reachability [label = "Tracking Reachability to Reduce Synchronization", shape="oval"]
+  domani [label = "Thread-Local Heaps and GC (2002)"]
+  rarc [label = "Reachability for Optimizing Reference Counting (2017)"]
+
+  # Edges
+  pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
+  mpic -> tso [label = "for efficient sharing"]
+
+  om -> maps [label = "+ efficient access and lower memory footprint"]
+  maps -> tosm [label = "+ unboxed values, final assumption, type specialization"]
+  tosm -> tso [label = "+ thread safety"]
+  tso -> rarc
+
+  reachability -> domani
+  domani -> tso
+
+  tso -> tsc [label = "tracking reachability"]
+  glsp -> tsc [label = "global synchronization"]
+  collections -> ss [label = "+ adapt representation dynamically to unboxed values"]
+  ss -> tsc [label = "+ thread safety"]
+}
