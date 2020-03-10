@@ -12,7 +12,7 @@ digraph G {
         URL = "https://stefan-marr.de/downloads/pldi15-marr-et-al-zero-overhead-metaprogramming.pdf"]
 
   om [label = "Object Representation", shape="oval"]
-  maps [label = "SELF Maps (1989)",
+  maps [label = "SELF & Maps (1989)",
         tooltip = "An Efficient Implementation of SELF a Dynamically-Typed Object-Oriented Language Based on Prototypes",
         URL = "http://www.selflanguage.org/_static/published/implementation.pdf"]
   tosm [label = "Truffle Object Model (2014)",
@@ -52,6 +52,25 @@ digraph G {
        tooltip = "Biased Reference Counting: Minimizing Atomic Operations in Garbage Collection",
        URL = "https://iacoma.cs.uiuc.edu/iacoma-papers/pact18.pdf"]
 
+  exe [label = "Execution Technique", shape="oval"]
+  stackVsReg [label = "Stack vs. Register (VEE'05)",
+       tooltip = "Virtual Machine Showdown: Stack Versus Registers",
+       URL = "https://www.usenix.org/legacy/events%2Fvee05%2Ffull_papers/p153-yunhe.pdf"]
+  topOfStack [label = "Top of Stack Caching (PLDI'95)",
+       tooltip = "Stack Caching for Interpreters",
+       URL = "http://www2.cs.arizona.edu/~collberg/Teaching/553/2011/Resources/ertl94sc.pdf"]
+  directIndirect [label = "Impact of Direct/Indirect Threading ('03)",
+       tooltip = "The Structure and Performance of Efficient Interpreters",
+       URL = "https://www.jilp.org/vol5/v5paper12.pdf"]
+  selfOptAst [label = "SelfOpt AST Interp. (DLS'12)",
+       tooltip = "Self-Optimizing AST Interpreters",
+       URL = "http://lafo.ssw.uni-linz.ac.at/papers/2012_DLS_SelfOptimizingASTInterpreters.pdf"]
+  superInstructions [label = "Super Instructions (TOPLAS'05)",
+       tooltip = "Optimizing Indirect Branch Prediction Accuracy in Virtual Machine Interpreters",
+       URL = "https://www.scss.tcd.ie/David.Gregg/papers/toplas05.pdf"]
+  quickening [label = "Bytecode Quickening (DLS'10)",
+       tooltip = "Efficient Interpretation Using Quickening",
+       URL = "https://publications.sba-research.org/publications/dls10.pdf"]
   # Edges
   pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
   mpic -> tso [label = "for efficient sharing"]
@@ -71,4 +90,13 @@ digraph G {
   glsp -> tsc [label = "global synchronization"]
   collections -> ss [label = "+ adapt representation dynamically to unboxed values"]
   ss -> tsc [label = "+ thread safety"]
+
+  exe -> directIndirect [label = "interpretation"]
+  exe -> stackVsReg [label = "interpretation"]
+  exe -> topOfStack [label = "interpretation"]
+  exe -> superInstructions [label = "interpretation"]
+  exe -> selfOptAst [label = "interpretation"]
+  exe -> quickening [label = "interpretation"]
+  quickening -> selfOptAst [label = "+ AST interpreters"]
+  exe -> maps [label = "just in time compilation"]
 }
