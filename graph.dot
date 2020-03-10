@@ -76,6 +76,26 @@ digraph G {
        tooltip = "Efficient Implementation of the Smalltalk-80 System",
        URL = "http://web.cs.ucla.edu/~palsberg/course/cs232/papers/DeutschSchiffman-popl84.pdf"]
 
+
+  adaptiveJit [label = "Adaptive Compilation (JAVA'99)",
+       tooltip = "The Jalapeño Dynamic Optimizing Compiler for Java",
+       URL = "https://pdfs.semanticscholar.org/8738/ba4b09cac68ad1ab7d036a6d5e40a17ee2c7.pdf"]
+
+  regionBased [label = "Region-based JIT (PLDI'18)",
+       tooltip = "HHVM JIT: A Profile-guided, Region-based Compiler for PHP and Hack",
+       URL = "https://research.fb.com/wp-content/uploads/2018/04/hhvm-jit-a-profile-guided-region-based-compiler-for-php-and-hack.pdf"]
+  traceBased [label = "Trace-based JIT (PLDI'00)",
+       tooltip = "Dynamo: A Transparent Dynamic Optimization System",
+       URL = "https://www.complang.tuwien.ac.at/andi/bala.pdf"]
+  traceMonkey [label = "TraceMonkey (PLDI'09)",
+       tooltip = "Trace-based Just-in-time Type Specialization for Dynamic Languages",
+       URL = "http://dept.cs.williams.edu/~freund/cs434/gal-trace.pdf"]
+
+
+  basicBlockVersioning [label = "Basic Block Versioning (ECOOP'15)",
+       tooltip = "Simple and Effective Type Check Removal through Lazy Basic Block Versioning",
+       URL = "https://drops.dagstuhl.de/opus/volltexte/2015/5219/pdf/9.pdf"]
+
   # Edges
   inlineCaching -> pic [label = "+ k-size cache"]
   pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
@@ -105,5 +125,11 @@ digraph G {
   exe -> selfOptAst [label = "interpretation"]
   exe -> quickening [label = "interpretation"]
   quickening -> selfOptAst [label = "+ AST interpreters"]
-  exe -> maps [label = "just in time compilation"]
+  exe -> maps [label = "method JIT"]
+  exe -> regionBased [label = "region JIT"]
+  exe -> traceBased [label = "trace JIT"]
+  exe -> basicBlockVersioning [label = "basic-block JIT"]
+  basicBlockVersioning -> shapesAndBBV [label = "type propagation"]
+  traceBased -> traceMonkey
+  maps -> adaptiveJit [label = "+ adaptive compilation"]
 }
