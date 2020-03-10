@@ -27,7 +27,7 @@ digraph G {
         URL = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf"]
 
   freezing [label = "Type Freezing Maps (CGO 2020)",
-            tooltip = "Type freezing: exploiting attribute type monomorphism in tracing JIT compilers",
+            tooltip = "Type Freezing: Exploiting Attribute Type Monomorphism in Tracing JIT Compilers",
             URL = "https://doi.org/10.1145/3368826.3377907"]
   shapesAndBBV [label = "Shapes and Basic Block Versioning (ECOOP 2016)",
                 tooltip = "Interprocedural Type Specialization of JavaScript Programs Without Type Analysis",
