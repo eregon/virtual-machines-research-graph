@@ -12,7 +12,7 @@ digraph G {
         URL = "https://stefan-marr.de/downloads/pldi15-marr-et-al-zero-overhead-metaprogramming.pdf"]
 
   om [label = "Object Representation", shape="oval"]
-  maps [label = "SELF & Maps (1989)",
+  maps [label = "SELF & Maps (OOPSLA'89)",
         tooltip = "An Efficient Implementation of SELF a Dynamically-Typed Object-Oriented Language Based on Prototypes",
         URL = "http://www.selflanguage.org/_static/published/implementation.pdf"]
   tosm [label = "Truffle Object Model (2014)",
@@ -71,7 +71,13 @@ digraph G {
   quickening [label = "Bytecode Quickening (DLS'10)",
        tooltip = "Efficient Interpretation Using Quickening",
        URL = "https://publications.sba-research.org/publications/dls10.pdf"]
+
+  inlineCaching [label = "Inline Caching (POPL'84)",
+       tooltip = "Efficient Implementation of the Smalltalk-80 System",
+       URL = "http://web.cs.ucla.edu/~palsberg/course/cs232/papers/DeutschSchiffman-popl84.pdf"]
+
   # Edges
+  inlineCaching -> pic [label = "+ k-size cache"]
   pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
   mpic -> tso [label = "for efficient sharing"]
 
@@ -91,6 +97,7 @@ digraph G {
   collections -> ss [label = "+ adapt representation dynamically to unboxed values"]
   ss -> tsc [label = "+ thread safety"]
 
+  exe -> inlineCaching [label = "lookup caching"]
   exe -> directIndirect [label = "interpretation"]
   exe -> stackVsReg [label = "interpretation"]
   exe -> topOfStack [label = "interpretation"]
