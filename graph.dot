@@ -26,6 +26,13 @@ digraph G {
         tooltip = "Techniques and Applications for Guest-Language Safepoints",
         URL = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf"]
 
+  freezing [label = "Type Freezing Maps (CGO 2020)",
+            tooltip = "Type freezing: exploiting attribute type monomorphism in tracing JIT compilers",
+            URL = "https://doi.org/10.1145/3368826.3377907"]
+  shapesAndBBV [label = "Shapes and Basic Block Versioning (ECOOP 2016)",
+                tooltip = "Interprocedural Type Specialization of JavaScript Programs Without Type Analysis",
+                URL = "https://drops.dagstuhl.de/opus/volltexte/2016/6101/pdf/LIPIcs-ECOOP-2016-7.pdf"]
+
   collections [label = "Collections Representation", shape="oval"]
   ss [label = "RPython Storage Strategies for Collections (2013)",
       tooltip = "Storage Strategies for Collections in Dynamically Typed Languages",
@@ -52,6 +59,8 @@ digraph G {
   om -> maps [label = "+ efficient access and lower memory footprint"]
   maps -> tosm [label = "+ unboxed values, final assumption, type specialization"]
   tosm -> tso [label = "+ thread safety"]
+  tosm -> shapesAndBBV [label = "+ basic block versioning"]
+  tosm -> freezing [label = "+ nested type freezing"]
   tso -> rarc
   rarc -> brc [label = "similar with bias towards a thread"]
 
