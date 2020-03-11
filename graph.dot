@@ -96,6 +96,22 @@ digraph G {
        tooltip = "Simple and Effective Type Check Removal through Lazy Basic Block Versioning",
        URL = "https://drops.dagstuhl.de/opus/volltexte/2015/5219/pdf/9.pdf"]
 
+
+
+metaTracing [label = "Meta Tracing Interpreters (ICOOOLPS'09)",
+       tooltip = "Tracing the Meta-level: PyPy's Tracing JIT Compiler",
+       URL = "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1023.9117&rep=rep1&type=pdf"]
+partialEvaluation [label = "Partially Evaluating Interpreters (PLDI'17)",
+       tooltip = "Practical Partial Evaluation for High-performance Dynamic Language Runtimes",
+       URL = "https://chrisseaton.com/rubytruffle/pldi17-truffle/pldi17-truffle.pdf"]
+MTvsPE [label = "Tracing vs. Partial Evaluation (OOPSLA'15)",
+       tooltip = "Tracing vs. Partial Evaluation: Comparing Meta-Compilation Approaches for Self-Optimizing Interpreters",
+       URL = "http://stefan-marr.de/downloads/oopsla15-marr-ducasse-meta-tracing-vs-partial-evaluation.pdf"]
+optDeopt [label = "Optimized Deoptimization (PPPJ'14)",
+       tooltip = "Speculation Without Regret: Reducing Deoptimization Meta-data in the Graal Compiler",
+       URL = "http://www.ssw.uni-linz.ac.at/General/Staff/GD/PPPJ-2014-duboscq-29.pdf"]
+
+
   # Edges
   inlineCaching -> pic [label = "+ k-size cache"]
   pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
@@ -132,4 +148,16 @@ digraph G {
   basicBlockVersioning -> shapesAndBBV [label = "type propagation"]
   traceBased -> traceMonkey
   maps -> adaptiveJit [label = "+ adaptive compilation"]
+
+  traceBased -> metaTracing [label = "+ reusable JIT"]
+  traceMonkey -> metaTracing [label = "+ reusable JIT"]
+  selfOptAst -> partialEvaluation [label = "+ compilation"]
+
+  selfOptAst -> mpic
+
+  metaTracing -> MTvsPE [label = "+ comparison"]
+  partialEvaluation -> MTvsPE [label = "+ comparison"]
+
+  maps -> optDeopt
+  optDeopt -> partialEvaluation
 }
