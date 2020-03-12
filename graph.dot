@@ -4,10 +4,10 @@ digraph G {
   node [shape = "box"]
 
   # Nodes
-  pic [label = "SELF Polymorphic Inline Caches (1991)",
+  pic [label = "SELF Polymorphic Inline Caches (ECOOP'91)",
        tooltip = "Optimizing Dynamically-Typed Object-Oriented Languages With Polymorphic Inline Caches",
        URL = "http://bibliography.selflanguage.org/_static/pics.pdf"]
-  mpic [label = "Truffle Dispatch Chains (Multidimensional Inline Caches) (2015)",
+  mpic [label = "Truffle Dispatch Chains (Multidimensional Inline Caches) (PLDI'15)",
         tooltip = "Zero-Overhead Metaprogramming; Reflection and Metaobject Protocols Fast and without Compromises",
         URL = "https://stefan-marr.de/downloads/pldi15-marr-et-al-zero-overhead-metaprogramming.pdf"]
 
@@ -15,40 +15,40 @@ digraph G {
   maps [label = "SELF & Maps (OOPSLA'89)",
         tooltip = "An Efficient Implementation of SELF a Dynamically-Typed Object-Oriented Language Based on Prototypes",
         URL = "http://www.selflanguage.org/_static/published/implementation.pdf"]
-  tosm [label = "Truffle Object Model (2014)",
+  tosm [label = "Truffle Object Model (PPPJ'14)",
         tooltip = "An Object Storage Model for the Truffle Language Implementation Framework",
         URL = "https://chrisseaton.com/rubytruffle/pppj14-om/pppj14-om.pdf"]
-  tso [label = "Truffle Thread-Safe Object Model (2016)",
+  tso [label = "Truffle Thread-Safe Object Model (OOPSLA'16)",
        tooltip = "Efficient and Thread-Safe Objects for Dynamically-Typed Languages",
        URL = "https://eregon.me/blog/assets/research/thread-safe-objects.pdf"]
 
-  glsp [label = "Truffle Guest-Language Safepoints (2015)",
+  glsp [label = "Truffle Guest-Language Safepoints (ICOOOLPS'15)",
         tooltip = "Techniques and Applications for Guest-Language Safepoints",
         URL = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf"]
 
-  freezing [label = "Type Freezing Maps (CGO 2020)",
+  freezing [label = "Type Freezing Maps (CGO'20)",
             tooltip = "Type Freezing: Exploiting Attribute Type Monomorphism in Tracing JIT Compilers",
             URL = "https://doi.org/10.1145/3368826.3377907"]
-  shapesAndBBV [label = "Shapes and Basic Block Versioning (ECOOP 2016)",
+  shapesAndBBV [label = "Shapes and Basic Block Versioning (ECOOP'16)",
                 tooltip = "Interprocedural Type Specialization of JavaScript Programs Without Type Analysis",
                 URL = "https://drops.dagstuhl.de/opus/volltexte/2016/6101/pdf/LIPIcs-ECOOP-2016-7.pdf"]
 
   collections [label = "Collections Representation", shape="oval"]
-  ss [label = "RPython Storage Strategies for Collections (2013)",
+  ss [label = "RPython Storage Strategies for Collections (OOPSLA'13)",
       tooltip = "Storage Strategies for Collections in Dynamically Typed Languages",
       URL = "https://tratt.net/laurie/research/pubs/html/bolz_diekmann_tratt__storage_strategies_for_collections_in_dynamically_typed_languages/"]
-  tsc [label = "Truffle Thread-Safe Collections (2018)",
+  tsc [label = "Truffle Thread-Safe Collections (OOPSLA'18)",
        tooltip = "Parallelization of Dynamic Languages: Synchronizing Built-in Collections",
        URL = "https://eregon.me/blog/assets/research/thread-safe-collections.pdf"]
 
   reachability [label = "Tracking Reachability to Reduce Synchronization", shape="oval"]
-  domani [label = "Thread-Local Heaps and GC (2002)",
+  domani [label = "Thread-Local Heaps and GC (ISMM'02)",
           tooltip = "Thread-Local Heaps for Java",
           URL = "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5846&amp;rep=rep1&amp;type=pdf"]
-  rarc [label = "Reachability for Dynamic Atomic Reference Counting (2017)",
+  rarc [label = "Reachability for Dynamic Atomic Reference Counting (DLS'17)",
         tooltip = "Dynamic Atomicity: Optimizing Swift Memory Management",
         URL = "https://dl.acm.org/doi/10.1145/3133841.3133843"]
-  brc [label = "Biased Reference Counting (2018)",
+  brc [label = "Biased Reference Counting (PACT'18)",
        tooltip = "Biased Reference Counting: Minimizing Atomic Operations in Garbage Collection",
        URL = "https://iacoma.cs.uiuc.edu/iacoma-papers/pact18.pdf"]
 
