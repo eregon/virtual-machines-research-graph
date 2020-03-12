@@ -114,7 +114,7 @@ optDeopt [label = "Optimized Deoptimization (PPPJ'14)",
 
   # Edges
   inlineCaching -> pic [label = "+ k-size cache"]
-  pic -> mpic [label = "+ cache for metaprogramming accesses, etc"]
+  pic -> mpic [label = "+ cache for metaprogramming, etc"]
   mpic -> tso [label = "for efficient sharing"]
 
   om -> maps [label = "+ efficient access and lower memory footprint"]
