@@ -4,10 +4,10 @@ digraph G {
   node [shape = "box"]
 
   # Nodes
-  pic [label = "SELF Polymorphic Inline Caches (ECOOP'91)",
+  pic [label = "Polymorphic Inline Caches (ECOOP'91)",
        tooltip = "Optimizing Dynamically-Typed Object-Oriented Languages With Polymorphic Inline Caches",
        URL = "http://bibliography.selflanguage.org/_static/pics.pdf"]
-  mpic [label = "Truffle Dispatch Chains (Multidimensional Inline Caches) (PLDI'15)",
+  mpic [label = "Dispatch Chains (Multidimensional Inline Caches) (PLDI'15)",
         tooltip = "Zero-Overhead Metaprogramming; Reflection and Metaobject Protocols Fast and without Compromises",
         URL = "https://stefan-marr.de/downloads/pldi15-marr-et-al-zero-overhead-metaprogramming.pdf"]
 
@@ -18,11 +18,11 @@ digraph G {
   tosm [label = "Truffle Object Model (PPPJ'14)",
         tooltip = "An Object Storage Model for the Truffle Language Implementation Framework",
         URL = "https://chrisseaton.com/rubytruffle/pppj14-om/pppj14-om.pdf"]
-  tso [label = "Truffle Thread-Safe Object Model (OOPSLA'16)",
+  tso [label = "Thread-Safe Object Model (OOPSLA'16)",
        tooltip = "Efficient and Thread-Safe Objects for Dynamically-Typed Languages",
        URL = "https://eregon.me/blog/assets/research/thread-safe-objects.pdf"]
 
-  glsp [label = "Truffle Guest-Language Safepoints (ICOOOLPS'15)",
+  glsp [label = "Guest-Language Safepoints (ICOOOLPS'15)",
         tooltip = "Techniques and Applications for Guest-Language Safepoints",
         URL = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf"]
 
@@ -34,10 +34,10 @@ digraph G {
                 URL = "https://drops.dagstuhl.de/opus/volltexte/2016/6101/pdf/LIPIcs-ECOOP-2016-7.pdf"]
 
   collections [label = "Collections Representation", shape="oval"]
-  ss [label = "RPython Storage Strategies for Collections (OOPSLA'13)",
+  ss [label = "Storage Strategies for Collections (OOPSLA'13)",
       tooltip = "Storage Strategies for Collections in Dynamically Typed Languages",
       URL = "https://tratt.net/laurie/research/pubs/html/bolz_diekmann_tratt__storage_strategies_for_collections_in_dynamically_typed_languages/"]
-  tsc [label = "Truffle Thread-Safe Collections (OOPSLA'18)",
+  tsc [label = "Synchronizing Collections based on Reachability (OOPSLA'18)",
        tooltip = "Parallelization of Dynamic Languages: Synchronizing Built-in Collections",
        URL = "https://eregon.me/blog/assets/research/thread-safe-collections.pdf"]
 
