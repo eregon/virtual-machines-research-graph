@@ -1,6 +1,4 @@
 digraph G {
-  label = "Research in Virtual Machines for Dynamically-Typed Languages"
-  labelloc = "t"
   node [shape = "box"]
 
   # Nodes
