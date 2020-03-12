@@ -152,7 +152,7 @@ optDeopt [label = "Optimized Deoptimization (PPPJ'14)",
   compilation -> basicBlockVersioning [label = "basic-block JIT"]
   basicBlockVersioning -> shapesAndBBV [label = "type propagation"]
   traceBased -> traceMonkey
-  maps -> adaptiveJit [label = "+ adaptive compilation"]
+  maps -> adaptiveJit
 
   traceBased -> metaTracing [label = "+ reusable JIT"]
   traceMonkey -> metaTracing [label = "+ reusable JIT"]
