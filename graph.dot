@@ -53,6 +53,8 @@ digraph G {
        URL = "https://iacoma.cs.uiuc.edu/iacoma-papers/pact18.pdf"]
 
   exe [label = "Execution Technique", shape="oval"]
+  interp [label = "Interpretation", shape="oval"]
+  compilation [label = "Compilation", shape="oval"]
   stackVsReg [label = "Stack vs. Register (VEE'05)",
        tooltip = "Virtual Machine Showdown: Stack Versus Registers",
        URL = "https://www.usenix.org/legacy/events%2Fvee05%2Ffull_papers/p153-yunhe.pdf"]
@@ -134,23 +136,28 @@ optDeopt [label = "Optimized Deoptimization (PPPJ'14)",
   ss -> tsc [label = "+ thread safety"]
 
   exe -> inlineCaching [label = "lookup caching"]
-  exe -> directIndirect [label = "interpretation"]
-  exe -> stackVsReg [label = "interpretation"]
-  exe -> topOfStack [label = "interpretation"]
-  exe -> superInstructions [label = "interpretation"]
-  exe -> selfOptAst [label = "interpretation"]
-  exe -> quickening [label = "interpretation"]
+
+  exe -> interp
+  interp -> directIndirect
+  interp -> stackVsReg
+  interp -> topOfStack
+  interp -> superInstructions
+  interp -> selfOptAst
+  interp -> quickening
   quickening -> selfOptAst [label = "+ AST interpreters"]
-  exe -> maps [label = "method JIT"]
-  exe -> regionBased [label = "region JIT"]
-  exe -> traceBased [label = "trace JIT"]
-  exe -> basicBlockVersioning [label = "basic-block JIT"]
+  exe -> compilation
+  compilation -> maps [label = "method JIT"]
+  compilation -> regionBased [label = "region JIT"]
+  compilation -> traceBased [label = "trace JIT"]
+  compilation -> basicBlockVersioning [label = "basic-block JIT"]
   basicBlockVersioning -> shapesAndBBV [label = "type propagation"]
   traceBased -> traceMonkey
   maps -> adaptiveJit [label = "+ adaptive compilation"]
 
   traceBased -> metaTracing [label = "+ reusable JIT"]
   traceMonkey -> metaTracing [label = "+ reusable JIT"]
+
+  maps -> partialEvaluation [label = "+ method-based PE"]
   selfOptAst -> partialEvaluation [label = "+ compilation"]
 
   selfOptAst -> mpic
