@@ -102,7 +102,7 @@ digraph G {
 
 metaTracing [label = "Meta Tracing Interpreters (ICOOOLPS'09)",
        tooltip = "Tracing the Meta-level: PyPy's Tracing JIT Compiler",
-       URL = "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1023.9117&rep=rep1&type=pdf"]
+       URL = "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1023.9117&amp;rep=rep1&amp;type=pdf"]
 partialEvaluation [label = "Partially Evaluating Interpreters (PLDI'17)",
        tooltip = "Practical Partial Evaluation for High-performance Dynamic Language Runtimes",
        URL = "https://chrisseaton.com/rubytruffle/pldi17-truffle/pldi17-truffle.pdf"]
