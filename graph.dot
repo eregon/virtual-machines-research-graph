@@ -120,7 +120,7 @@ optDeopt [label = "Optimized Deoptimization (PPPJ'14)",
   mpic -> tso [label = "for efficient sharing"]
 
   om -> maps [label = "+ efficient access and lower memory footprint"]
-  maps -> tosm [label = "+ unboxed values, final assumption, type specialization"]
+  maps -> tosm [label = "+ unboxed values, read-only & type specialization"]
   tosm -> tso [label = "+ thread safety"]
   tosm -> shapesAndBBV [label = "+ basic block versioning"]
   tosm -> freezing [label = "+ nested type freezing"]
