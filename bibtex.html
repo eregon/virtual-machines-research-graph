@@ -200,9 +200,8 @@ const dataPromise = new Promise((resolve) => {
   @inproceedings{Deutsch:1984:IC,
   abstract = {The Smalltalk-80* programming language includes dynamic storage allocation, full upward funargs, and universally polymorphic procedures; the Smalltalk-80 programming system features interactive execution with incremental compilation, and implementation portability. These features of modern programming systems are among the most difficult to implement efficiently, even individually. A new implementation of the Smalltalk-80 system, hosted on a small microprocessor-based computer, achieves high performance while retaining complete (object code) compatibility with existing implementations. This paper discusses the most significant optimization techniques developed over the course of the project, many of which are applicable to other languages. The key idea is to represent certain runtime state (both code and data) in more than one form, and to convert between forms when needed.},
   author = {Deutsch, L. Peter and Schiffman, Allan M.},
-  biburl = {https://www.bibsonomy.org/bibtex/2e93f7dc5b773c8a615d3de4aa468bea4/gron},
   booktitle = {POPL '84: Proceedings of the 11th ACM SIGACT-SIGPLAN symposium on Principles of programming languages},
-  description = {Efficient implementation of the smalltalk-80 system},
+  description = {Efficient Implementation of the Smalltalk-80 System},
   doi = {10.1145/800017.800542},
   isbn = {0-89791-125-3},
   pages = {297--302},
@@ -210,8 +209,30 @@ const dataPromise = new Promise((resolve) => {
   series = {POPL'84},
   title = {Efficient Implementation of the Smalltalk-80 System},
   year = 1984,
-  vm:concepts = {Lookup Caches},
+  url = "http://web.cs.ucla.edu/~palsberg/course/cs232/papers/DeutschSchiffman-popl84.pdf",
+
+  vm:concepts = {Lookup Caches, Execution},
   vm:shortTitle = {Inline Caches}
+}
+
+@inproceedings{Chambers:89:Self,
+  abstract = {We have developed and implemented techniques that double the performance of dynamically-typed object-oriented languages. Our SELF implementation runs twice as fast as the fastest Smalltalk implementation, despite SELF's lack of classes and explicit variables. To compensate for the absence of classes, our system uses implementation-level maps to transparently group objects cloned from the same prototype, providing data type information and eliminating the apparent space overhead for prototype-based systems. To compensate for dynamic typing, user-defined control structures, and the lack of explicit variables, our system dynamically compiles multiple versions of a source method, each customized according to its receiver's map. Within each version the type of the receiver is fixed, and thus the compiler can statically bind and inline all messages sent to self. Message splitting and type prediction extract and preserve even more static type information, allowing the compiler to inline many other messages. Inlining dramatically improves performance and eliminates the need to hard-wire low-level methods such as +,==, and ifTrue:. Despite inlining and other optimizations, our system still supports interactive programming environments. The system traverses internal dependency lists to invalidate all compiled methods affected by a programming change. The debugger reconstructs inlined stack frames from compiler-generated debugging information, making inlining invisible to the SELF programmer.},
+  author = {Chambers, Craig and Ungar, David and Lee, Elgin},
+  booktitle = {Proceedings on Object-Oriented Programming Systems, Languages and Applications},
+  doi = {10.1145/74878.74884},
+  isbn = {0-89791-333-7},
+  issn = {0362-1340},
+  month = {October},
+  pages = {49--70},
+  publisher = {ACM},
+  series = {OOPSLA'89},
+  title = {An Efficient Implementation of SELF a Dynamically-Typed Object-Oriented Language Based on Prototypes},
+  year = 1989,
+  url = {http://www.selflanguage.org/_static/published/implementation.pdf},
+
+  vm:concepts = {Object Representation},
+  vm:shortTitle = {SELF & Maps},
+  vm:edge:uses = {Deutsch:1984:IC + compilation}
 }
 
 @inproceedings{Hoelzle:91:PIC,
@@ -228,10 +249,205 @@ const dataPromise = new Promise((resolve) => {
   volume = 512,
   year = 1991,
   url = {http://bibliography.selflanguage.org/_static/pics.pdf},
+
   vm:concepts = {Lookup Caches},
   vm:shortTitle = {Polymorphic Inline Caches},
-  vm:edge:extends = {Deutsch:1984:IC + polymorphic;Deutsch:1984:IC + megamorphic},
-  vm:edge:uses = {Deutsch:1984:IC}
+  vm:edge:extends = {Deutsch:1984:IC + k-size cache}
+}
+
+@inproceedings{Bolz:2013:SSC,
+  author = {Bolz, Carl Friedrich and Diekmann, Lukas and Tratt, Laurence},
+  booktitle = {Proceedings of the 2013 ACM SIGPLAN International Conference on Object Oriented Programming Systems Languages \& Applications},
+  description = {Storage strategies for collections in dynamically typed languages},
+  doi = {10.1145/2509136.2509531},
+  isbn = {978-1-4503-2374-1},
+  numpages = {16},
+  pages = {167--182},
+  publisher = {ACM},
+  series = {OOPSLA'13},
+  title = {Storage Strategies for Collections in Dynamically Typed Languages},
+  year = 2013,
+  url = "https://tratt.net/laurie/research/pubs/html/bolz_diekmann_tratt__storage_strategies_for_collections_in_dynamically_typed_languages/",
+
+  vm:concepts = {Collections Representation},
+  vm:shortTitle = {Storage Strategies for Collections},
+  vm:edge:extends = {CollectionsRepresentation + adapt representation dynamically to unboxed values}
+}
+
+@inproceedings{Woss:14:TOM,
+  abstract = {Truffle is a Java-based framework for developing high-performance language runtimes. Language implementers aiming at developing new runtimes have to design all the runtime mechanisms for managing dynamically typed objects from scratch. This not only leads to potential code duplication, but also impacts the actual time needed to develop a fully-fledged runtime. In this paper we address this issue by introducing a common object storage model (OSM) for Truffle that can be used by language implementers to develop new runtimes. The OSM is generic, language-agnostic, and portable, as it can be used to implement a great variety of dynamic languages. It is extensible, featuring built-in support for custom extension mechanisms. It is also high-performance, as it is designed to benefit from the optimizing compiler in the Truffle framework. Our initial evaluation indicates that the Truffle OSM can be used to implement high-performance language runtimes, with no performance overhead when compared to language-specific solutions.},
+  author = {Wöß, Andreas and Wirth, Christian and Bonetta, Daniele and Seaton, Chris and Humer, Christian and Mössenböck, Hanspeter},
+  booktitle = {Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java Platform: Virtual Machines, Languages, and Tools},
+  doi = {10.1145/2647508.2647517},
+  isbn = {978-1-4503-2926-2},
+  numpages = {12},
+  pages = {133--144},
+  publisher = {ACM},
+  series = {PPPJ'14},
+  title = {An Object Storage Model for the Truffle Language Implementation Framework},
+  year = 2014,
+  url = "https://chrisseaton.com/rubytruffle/pppj14-om/pppj14-om.pdf",
+
+  vm:shortTitle = {Truffle Object Model},
+  vm:edge:extends = {
+    Chambers:89:Self + unboxed values, read-only & type specialization;
+    ObjectRepresentation + efficient access and lower memory footprint}
+}
+
+@inproceedings{Marr:15:DC,
+  abstract = {Runtime metaprogramming enables many useful applications and is often a convenient solution to solve problems in a generic way, which makes it widely used in frameworks, middleware, and domain-specific languages. However, powerful metaobject protocols are rarely supported and even common concepts such as reflective method invocation or dynamic proxies are not optimized. Solutions proposed in literature either restrict the metaprogramming capabilities or require application or library developers to apply performance improving techniques.
+For overhead-free runtime metaprogramming, we demonstrate that dispatch chains, a generalized form of polymorphic inline caches common to self-optimizing interpreters, are a simple optimization at the language-implementation level. Our evaluation with self-optimizing interpreters shows that unrestricted metaobject protocols can be realized for the first time without runtime overhead, and that this optimization is applicable for just-in-time compilation of interpreters based on meta-tracing as well as partial evaluation. In this context, we also demonstrate that optimizing common reflective operations can lead to significant performance improvements for existing applications.},
+  appendix = {https://stefan-marr.de/papers/pldi-marr-et-al-zero-overhead-metaprogramming-artifacts/},
+  author = {Marr, Stefan and Seaton, Chris and Ducasse, Stéphane},
+  blog = {https://stefan-marr.de/2015/04/zero-overhead-metaprogramming/},
+  booktitle = {Proceedings of the 36th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+  doi = {10.1145/2737924.2737963},
+  html = {https://stefan-marr.de/papers/pldi-marr-et-al-zero-overhead-metaprogramming/},
+  isbn = {978-1-4503-3468-6},
+  month = {June},
+  numpages = {10},
+  pages = {545--554},
+  url = {https://stefan-marr.de/downloads/pldi15-marr-et-al-zero-overhead-metaprogramming.pdf},
+  publisher = {ACM},
+  series = {PLDI'15},
+  title = {Zero-Overhead Metaprogramming: Reflection and Metaobject Protocols Fast and without Compromises},
+  year = 2015,
+
+  vm:concepts = {Lookup Caches, Metaobject Protocols},
+  vm:shortTitle = {Dispatch Chains (Multidimensional Lookup Caches)},
+  vm:edge:extends = {Hoelzle:91:PIC + nested PICs, cache for metaprogramming}
+}
+
+@inproceedings{Daloze:2015:GLS,
+  abstract = {Safepoints are a virtual machine mechanism that allows one thread
+to suspend other threads in a known state so that runtime actions
+can be performed without interruption and with data structures in a
+consistent state. Many virtual machines use safepoints as a mechanism
+to provide services such as stop-the-world garbage collection,
+debugging, and modification to running code such as installing
+or replacing classes. Languages implemented on these virtual machines
+may have access to these services, but not directly to the
+safepoint mechanism itself. We show that safepoints have many
+useful applications for the implementation of guest languages running
+on a virtual machine. We describe an API for using safepoints
+in languages that were implemented under the Truffle language implementation
+framework on the Java Virtual Machine and show
+several applications of the API to implement useful guest-language
+functionality. We present an efficient implementation of this API,
+when running in combination with the Graal dynamic compiler. We
+also demonstrate that our safepoints cause zero overhead with respect
+to peak performance and statistically insignificant overhead
+with respect to compilation time. We compare this to other techniques
+that could be used to implement the same functionality and
+demonstrate the large overhead that they incur.},
+  author = {Daloze, Benoit and Seaton, Chris and Bonetta, Daniele and Mössenböck, Hanspeter},
+  booktitle = {Proceedings of the 10th International Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems},
+  numpages = {10},
+  series = {ICOOOLPS'15},
+  title = {Techniques and Applications for Guest-Language Safepoints},
+  year = 2015,
+  url = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf",
+
+  vm:concepts = {Safepoints},
+  vm:shortTitle = {Guest-Language Safepoints}
+}
+
+@inproceedings{Chevalier-Boisvert:2016:ITS,
+  author = {Chevalier-Boisvert, Maxime and Feeley, Marc},
+  booktitle = {30th European Conference on Object-Oriented Programming (ECOOP 2016)},
+  description = {DROPS - Interprocedural Type Specialization of JavaScript Programs Without Type Analysis},
+  doi = {10.4230/LIPIcs.ECOOP.2016.7},
+  isbn = {978-3-95977-014-9},
+  issn = {1868-8969},
+  pages = {7:1--7:24},
+  publisher = {Schloss Dagstuhl--Leibniz-Zentrum fuer Informatik},
+  series = {ECOOP'16},
+  title = {Interprocedural Type Specialization of JavaScript Programs Without Type Analysis},
+  volume = 56,
+  year = 2016,
+  url = "https://drops.dagstuhl.de/opus/volltexte/2016/6101/pdf/LIPIcs-ECOOP-2016-7.pdf",
+
+  vm:shortTitle = {Shapes and Basic Block Versioning},
+  vm:edge:extends = {Woss:14:TOM + basic block versioning}
+}
+
+
+@inproceedings{Daloze:2016:TSO,
+  abstract = {We are in the multi-core era.
+Dynamically-typed languages are in widespread use, but their support for
+multithreading still lags behind. One of the reasons is that the sophisticated
+techniques they use to efficiently represent their dynamic object models are
+often unsafe in multithreaded environments.
+
+This paper defines safety requirements for dynamic object models in
+multithreaded environments.
+Based on these requirements, a language-agnostic and thread-safe object model
+is designed that maintains the efficiency of sequential approaches.
+This is achieved by ensuring that field reads do not require synchronization
+and field updates only need to synchronize on objects shared between threads.
+
+Basing our work on JRuby+Truffle, we show that our safe object model has zero overhead on peak performance for thread-local objects
+and only 3\% average overhead on parallel benchmarks where field updates require synchronization.
+Thus, it can be a foundation for safe and efficient multithreaded VMs for a wide range of dynamic languages.},
+  author = {Daloze, Benoit and Marr, Stefan and Bonetta, Daniele and Mössenböck, Hanspeter},
+  booktitle = {Proceedings of the 2016 ACM International Conference on Object Oriented Programming Systems Languages \& Applications},
+  day = 2,
+  doi = {10.1145/2983990.2984001},
+  isbn = {978-1-4503-4444-9},
+  month = {November},
+  numpages = {18},
+  pages = {642--659},
+  url = {https://eregon.me/blog/assets/research/thread-safe-objects.pdf},
+  publisher = {ACM},
+  series = {OOPSLA'16},
+  title = {Efficient and Thread-Safe Objects for Dynamically-Typed Languages},
+  year = 2016,
+
+  vm:concepts = {VM Implementation Thread Safety},
+  vm:shortTitle = {Thread-Safe Object Model},
+  vm:edge:extends = {
+    Marr:15:DC for efficient sharing;
+    Woss:14:TOM + thread safety}
+}
+
+@article{Daloze:2018:TSC,
+  abstract = {Dynamic programming languages such as Python and Ruby are widely used, and much effort is spent on making them efficient. One substantial research effort in this direction is the enabling of parallel code execution. While there has been significant progress, making dynamic collections efficient, scalable, and thread-safe is an open issue. Typical programs in dynamic languages use few but versatile collection types. Such collections are an important ingredient of dynamic environments, but are difficult to make safe, efficient, and scalable.
+              In this paper, we propose an approach for efficient and concurrent collections by gradually increasing synchronization levels according to the dynamic needs of each collection instance. Collections reachable only by a single thread have no synchronization, arrays accessed in bounds have minimal synchronization, and for the general case, we adopt the Layout Lock paradigm and extend its design with a lightweight version that fits the setting of dynamic languages. We apply our approach to Ruby’s Array and Hash collections. Our experiments show that our approach has no overhead on single-threaded benchmarks, scales linearly for Array and Hash accesses, achieves the same scalability as Fortran and Java for classic parallel algorithms, and scales better than other Ruby implementations on Ruby workloads.},
+  author = {Daloze, Benoit and Tal, Arie and Marr, Stefan and Mössenböck, Hanspeter and Petrank, Erez},
+  doi = {10.1145/3276478},
+  journal = {Proceedings of the ACM on Programming Languages},
+  month = {November},
+  number = {OOPSLA},
+  pages = {108:1--108:30},
+  url = {https://eregon.me/blog/assets/research/thread-safe-collections.pdf},
+  series = {OOPSLA'18},
+  title = {{Parallelization of Dynamic Languages: Synchronizing Built-in Collections}},
+  volume = 2,
+  year = 2018,
+
+  vm:shortTitle = {Synchronizing Collections based on Reachability},
+  vm:edge:extends = {
+    Bolz:2013:SSC + thread safety;
+    Daloze:2016:TSO + collections},
+  vm:edge:uses = {
+    Daloze:2015:GLS + global synchronization;
+    Daloze:2016:TSO + tracking reachability}
+}
+
+@inproceedings{Cheng:2020:TF,
+  author = {Cheng, Lin and Ilbeyi, Berkin and Bolz-Tereick, Carl Friedrich and Batten, Christopher},
+  booktitle = {Proceedings of the 18th {ACM}/{IEEE} International Symposium on Code Generation and Optimization},
+  description = {Type freezing: exploiting attribute type monomorphism in tracing JIT compilers | Proceedings of the 18th ACM/IEEE International Symposium on Code Generation and Optimization},
+  doi = {10.1145/3368826.3377907},
+  month = feb,
+  publisher = {ACM},
+  series = {CGO'20},
+  title = {Type Freezing: Exploiting Attribute Type Monomorphism in Tracing JIT Compilers},
+  url = {https://dl.acm.org/doi/abs/10.1145/3368826.3377907},
+  year = 2020,
+
+  vm:shortTitle = {Type Freezing Maps},
+  vm:edge:extends = {Woss:14:TOM + nested type freezing}
 }
   `));
 })
