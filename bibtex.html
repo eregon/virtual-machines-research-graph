@@ -82,7 +82,7 @@ function getPapersAndConcepts(entries) {
         for (const e of edges) {
           const trimmed = e.trim();
           const idxFirstSpace = trimmed.indexOf(' ');
-          const targetId = trimmed.substr(0, idxFirstSpace);
+          const targetId = idxFirstSpace === -1 ? trimmed : trimmed.substr(0, idxFirstSpace);
           let label = idxFirstSpace === -1 ? null : trimmed.substr(idxFirstSpace).trim();
           if (label && label.length == 0) {
             label = null;
