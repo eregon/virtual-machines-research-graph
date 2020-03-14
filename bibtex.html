@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/@hpcc-js/wasm@0.3.6/dist/index.min.js"></script>
+  <script src="https://unpkg.com/d3-graphviz@3.0.0/build/d3-graphviz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bibtex-parse-js@0.0.24/bibtexParse.js" integrity="sha256-v968ksKZppVegXgenPlIK/9mN80zJo1PXOCu+ao0lKw=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <h1>
+    Virtual Machine Research Overview
+  </h1>
+
+  <p>
+    <strong>Disclaimer:</strong> It's not assumed this overview is complete in any way.
+  </p>
+  <p>
+  <a href="https://github.com/eregon/virtual-machines-research-graph/edit/master/graph.dot">Edit on GitHub</a>
+  </p>
+<div id="graph" style="text-align: center;"></div>
+<script>
+//@ts-check
+'use strict';
+
+function getPapersAndConcepts(entries) {
+  const papers = [];
+  const concepts = {};
+
+  for (const paper of entries) {
+    const p = {
+      id: paper.citationKey,
+      shortTitle: paper.entryTags['vm:shortTitle'],
+      venue: paper.entryTags.series,
+      title: paper.entryTags.title,
+      url: paper.entryTags.url,
+      year: paper.entryTags.year
+    };
+
+    // check completeness
+    for (const [key, value] of Object.entries(p)) {
+      if (!value) {
+        console.warn(`${paper.citationKey} misses ${key}`);
+      }
+    }
+
+    // extract concepts
+    if (paper.entryTags['vm:concepts']) {
+      const cs = paper.entryTags['vm:concepts'].split(',');
+      for (const c of cs) {
+        if (c.trim().length > 0) {
+          const concept = {
+            id: getConceptId(c),
+            name: c.trim()
+          };
+
+          concepts[concept.id] = concept;
+          if (!p.concepts) {
+            p.concepts = [];
+          }
+          p.concepts.push(concept);
+
+          if (!p.edges) {
+            p.edges = [];
+          }
+          p.edges.push({
+            type: 'concept',
+            target: concept.id,
+            label: null
+          });
+        }
+      }
+    }
+
+    // extract edges
+    for (const key of Object.keys(paper.entryTags)) {
+      if (key.startsWith('vm:edge:')) {
+        const edgeName = key.replace('vm:edge:', '');
+        const edges = paper.entryTags[key].split(';');
+
+        for (const e of edges) {
+          const trimmed = e.trim();
+          const idxFirstSpace = trimmed.indexOf(' ');
+          const targetId = trimmed.substr(0, idxFirstSpace);
+          let label = idxFirstSpace === -1 ? null : trimmed.substr(idxFirstSpace).trim();
+          if (label && label.length == 0) {
+            label = null;
+          }
+
+          if (!p.edges) {
+            p.edges = [];
+          }
+          p.edges.push({
+            type: edgeName,
+            target: targetId,
+            label: label
+          });
+        }
+      }
+    }
+
+    papers.push(p);
+  }
+  return {papers, concepts};
+}
+
+function getConceptId(str) {
+  return str.trim().replace(/\s/g,'');
+}
+
+function renderConcepts(concepts) {
+  let result = '';
+  for (const c of Object.values(concepts)) {
+    result += `
+      "${c.id}" [
+        label = "${c.name}",
+        shape = "oval"
+      ]
+    `;
+  }
+  return result;
+}
+
+function renderPapers(papers) {
+  let result = '';
+  for (const paper of papers) {
+    result += `
+      "${paper.id}" [
+        label = "${paper.shortTitle} (${paper.venue})",
+        tooltip = "${paper.title}",
+        URL = "${paper.url}"
+      ]
+    `;
+  }
+
+  return result;
+}
+
+function renderEdges(papers) {
+  const edgeTypes = {
+    'default': 'solid',
+    'concept': 'dotted',
+    'extends': 'solid',
+    'uses':    'dashed'
+  };
+  let result = '';
+  for (const paper of papers) {
+    if (!paper.edges) {
+      continue;
+    }
+
+    for (const edge of paper.edges) {
+      let style = edgeTypes[edge.type];
+      if (!style) {
+        style = edgeTypes['default'];
+      }
+
+      let label = '';
+      if (edge.label) {
+        label = `label = "${edge.label}",`
+      }
+
+      result += `
+        "${paper.id}" -> "${edge.target}" [
+          ${label}
+          style = "${style}"
+        ]
+        `;
+    }
+  }
+  return result;
+}
+
+function renderToDot(papers, concepts) {
+  let result = `digraph G {
+  node [shape = "box"]`;
+
+  result += renderConcepts(concepts);
+  result += renderPapers(papers);
+  result += renderEdges(papers);
+
+  result += '}';
+  return result;
+}
+
+function convertToDot(bibtex) {
+  const entries = bibtexParse.toJSON(bibtex);
+  const {papers, concepts} = getPapersAndConcepts(entries);
+  return renderToDot(papers, concepts);
+}
+
+
+// const dataPromise = fetch('https://raw.githubusercontent.com/eregon/virtual-machines-research-graph/master/vm.bib')
+//   .then((response) => {
+//     return response.text();
+//   });
+const dataPromise = new Promise((resolve) => {
+  resolve(convertToDot(`
+  @inproceedings{Deutsch:1984:IC,
+  abstract = {The Smalltalk-80* programming language includes dynamic storage allocation, full upward funargs, and universally polymorphic procedures; the Smalltalk-80 programming system features interactive execution with incremental compilation, and implementation portability. These features of modern programming systems are among the most difficult to implement efficiently, even individually. A new implementation of the Smalltalk-80 system, hosted on a small microprocessor-based computer, achieves high performance while retaining complete (object code) compatibility with existing implementations. This paper discusses the most significant optimization techniques developed over the course of the project, many of which are applicable to other languages. The key idea is to represent certain runtime state (both code and data) in more than one form, and to convert between forms when needed.},
+  author = {Deutsch, L. Peter and Schiffman, Allan M.},
+  biburl = {https://www.bibsonomy.org/bibtex/2e93f7dc5b773c8a615d3de4aa468bea4/gron},
+  booktitle = {POPL '84: Proceedings of the 11th ACM SIGACT-SIGPLAN symposium on Principles of programming languages},
+  description = {Efficient implementation of the smalltalk-80 system},
+  doi = {10.1145/800017.800542},
+  isbn = {0-89791-125-3},
+  pages = {297--302},
+  publisher = {ACM},
+  series = {POPL'84},
+  title = {Efficient Implementation of the Smalltalk-80 System},
+  year = 1984,
+  vm:concepts = {Lookup Caches},
+  vm:shortTitle = {Inline Caches}
+}
+
+@inproceedings{Hoelzle:91:PIC,
+  abstract = {Polymorphic inline caches (PICs) provide a new way to reduce the overhead of polymorphic message sends by extending inline caches to include more than one cached lookup result per call site. For a set of typical object-oriented SELF programs, PICs achieve a median speedup of 11%. As an important side effect, PICs collect type information by recording all of the receiver types actually used at a given call site. The compiler can exploit this type information to generate better code when recompiling a method. An experimental version of such a system achieves a median speedup of 27% for our set of SELF programs, reducing the number of non-inlined message sends by a factor of two. Implementations of dynamically-typed object-oriented languages have been limited by the paucity of type information available to the compiler. The abundance of the type information provided by PICs suggests a new compilation approach for these languages, adaptive compilation . Such compilers may succeed in generating very efficient code for the time-critical parts of a program without incurring distracting compilation pauses.},
+  author = {Hölzle, Urs and Chambers, Craig and Ungar, David},
+  booktitle = {ECOOP '91: European Conference on Object-Oriented Programming},
+  description = {Optimizing Dynamically-Typed Object-Oriented Languages With Polymorphic Inline Caches},
+  doi = {10.1007/BFb0057013},
+  isbn = {3-540-54262-0},
+  pages = {21--38},
+  publisher = {Springer},
+  series = {ECOOP'91},
+  title = {Optimizing Dynamically-Typed Object-Oriented Languages With Polymorphic Inline Caches},
+  volume = 512,
+  year = 1991,
+  url = {http://bibliography.selflanguage.org/_static/pics.pdf},
+  vm:concepts = {Lookup Caches},
+  vm:shortTitle = {Polymorphic Inline Caches},
+  vm:edge:extends = {Deutsch:1984:IC + polymorphic;Deutsch:1984:IC + megamorphic},
+  vm:edge:uses = {Deutsch:1984:IC}
+}
+  `));
+})
+
+var dotIndex = 0;
+var graphviz = d3.select("#graph").graphviz()
+    .transition(function () {
+        return d3.transition("main")
+            .ease(d3.easeLinear)
+            .delay(100)
+            .duration(500);
+    })
+    .logEvents(true)
+    .on("initEnd", triggerRender);
+
+let triggerRenderResolve;
+const triggerRenderP = new Promise(function(resolve, reject) {
+  triggerRenderResolve = resolve;
+});
+
+function triggerRender() {
+  triggerRenderResolve();
+}
+
+Promise.all([dataPromise, triggerRenderP]).then(function(values) {
+  const dot = values[0];
+  graphviz.renderDot(dot);
+});
+</script>
+</html>
