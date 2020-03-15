@@ -24,11 +24,93 @@
 //@ts-check
 'use strict';
 
+function extractConcepts(p, paper, concepts) {
+  if (!paper.entryTags['vm:concepts']) {
+    return;
+  }
+
+  const cs = paper.entryTags['vm:concepts'].split(',');
+  for (const c of cs) {
+    if (c.trim().length > 0) {
+      const concept = {
+        id: getConceptId(c),
+        name: c.trim()
+      };
+
+      concepts[concept.id] = concept;
+      if (!p.concepts) {
+        p.concepts = [];
+      }
+      p.concepts.push(concept);
+
+      if (!p.edges) {
+        p.edges = [];
+      }
+      p.edges.push({
+        type: 'concept',
+        target: concept.id,
+        label: null
+      });
+    }
+  }
+}
+
+function extractEdges(p, paper) {
+  for (const key of Object.keys(paper.entryTags)) {
+    if (key.startsWith('vm:edge:')) {
+      const edgeName = key.replace('vm:edge:', '');
+      const edges = paper.entryTags[key].split(';');
+
+      for (const e of edges) {
+        const trimmed = e.trim();
+        const idxFirstSpace = trimmed.indexOf(' ');
+        const targetId = idxFirstSpace === -1 ? trimmed : trimmed.substr(0, idxFirstSpace);
+        let label = idxFirstSpace === -1 ? null : trimmed.substr(idxFirstSpace).trim();
+        if (label && label.length == 0) {
+          label = null;
+        }
+
+        if (!p.edges) {
+          p.edges = [];
+        }
+        p.edges.push({
+          type: edgeName,
+          target: targetId,
+          label: label
+        });
+      }
+    }
+  }
+}
+
 function getPapersAndConcepts(entries) {
   const papers = [];
   const concepts = {};
 
   for (const paper of entries) {
+    if (paper.entryType === "COMMENT") {
+      continue;
+    }
+
+    if (paper.entryType === "concept") {
+      let concept = concepts[paper.citationKey];
+      if (!concept) {
+        concept = {
+          id: getConceptId(paper.citationKey),
+          name: paper.citationKey.trim()
+        };
+        concepts[paper.citationKey] = concept;
+      }
+
+      const name = paper.entryTags['vm:shortTitle'];
+      if (name && name.trim()) {
+        concept.name = name.trim();
+      }
+
+      extractConcepts(concept, paper, concepts);
+      continue;
+    }
+
     const p = {
       id: paper.citationKey,
       shortTitle: paper.entryTags['vm:shortTitle'],
@@ -45,60 +127,8 @@ function getPapersAndConcepts(entries) {
       }
     }
 
-    // extract concepts
-    if (paper.entryTags['vm:concepts']) {
-      const cs = paper.entryTags['vm:concepts'].split(',');
-      for (const c of cs) {
-        if (c.trim().length > 0) {
-          const concept = {
-            id: getConceptId(c),
-            name: c.trim()
-          };
-
-          concepts[concept.id] = concept;
-          if (!p.concepts) {
-            p.concepts = [];
-          }
-          p.concepts.push(concept);
-
-          if (!p.edges) {
-            p.edges = [];
-          }
-          p.edges.push({
-            type: 'concept',
-            target: concept.id,
-            label: null
-          });
-        }
-      }
-    }
-
-    // extract edges
-    for (const key of Object.keys(paper.entryTags)) {
-      if (key.startsWith('vm:edge:')) {
-        const edgeName = key.replace('vm:edge:', '');
-        const edges = paper.entryTags[key].split(';');
-
-        for (const e of edges) {
-          const trimmed = e.trim();
-          const idxFirstSpace = trimmed.indexOf(' ');
-          const targetId = idxFirstSpace === -1 ? trimmed : trimmed.substr(0, idxFirstSpace);
-          let label = idxFirstSpace === -1 ? null : trimmed.substr(idxFirstSpace).trim();
-          if (label && label.length == 0) {
-            label = null;
-          }
-
-          if (!p.edges) {
-            p.edges = [];
-          }
-          p.edges.push({
-            type: edgeName,
-            target: targetId,
-            label: label
-          });
-        }
-      }
-    }
+    extractConcepts(p, paper, concepts);
+    extractEdges(p, paper);
 
     papers.push(p);
   }
@@ -177,6 +207,8 @@ function renderToDot(papers, concepts) {
   node [shape = "box"]`;
 
   result += renderConcepts(concepts);
+  result += renderEdges(Object.values(concepts));
+
   result += renderPapers(papers);
   result += renderEdges(papers);
 
