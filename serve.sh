@@ -4,7 +4,7 @@ PORT=7997
 HOST=127.0.0.1
 
 echo Starting Server
-echo "   Access: http://${HOST}:${PORT}/bibtex.html"
+echo "   Access: http://${HOST}:${PORT}/index.html"
 
 if [ -x "$(command -v python3)" ]; then
   python3 -m http.server ${PORT} --bind ${HOST}
