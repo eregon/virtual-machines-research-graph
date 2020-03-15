@@ -155,11 +155,12 @@ function renderConcepts(concepts) {
 function renderPapers(papers) {
   let result = '';
   for (const paper of papers) {
+    const graphizEscapedUrl = paper.url.replace(/&(?!amp;)/gm, '&amp;');
     result += `
       "${paper.id}" [
         label = "${paper.shortTitle} (${paper.venue})",
         tooltip = "${paper.title}",
-        URL = "${paper.url}"
+        URL = "${graphizEscapedUrl}"
       ]
     `;
   }
@@ -451,7 +452,7 @@ compiler writers, and interpreter writers can improve the performance of interpr
   series = {ICOOOLPS'09},
   title = {Tracing the Meta-level: PyPy's Tracing JIT Compiler},
   year = 2009,
-  url = "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1023.9117&amp;rep=rep1&amp;type=pdf",
+  url = "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1023.9117&rep=rep1&type=pdf",
 
   vm:shortTitle = {Meta Tracing Interpreters},
   vm:edge:extends = {
