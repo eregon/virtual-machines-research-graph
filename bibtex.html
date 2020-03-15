@@ -6,6 +6,12 @@
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.6/dist/index.min.js"></script>
   <script src="https://unpkg.com/d3-graphviz@3.0.0/build/d3-graphviz.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bibtex-parse-js@0.0.24/bibtexParse.js" integrity="sha256-v968ksKZppVegXgenPlIK/9mN80zJo1PXOCu+ao0lKw=" crossorigin="anonymous"></script>
+
+<style>
+body {
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+}
+</style>
 </head>
 
 <body>
@@ -237,7 +243,9 @@ function renderEdges(papers) {
 
 function renderToDot(papers, concepts) {
   let result = `digraph G {
-  node [shape = "box"]`;
+    graph [fontname = "helvetica"];
+    edge [fontname = "helvetica"];
+    node [shape = "box", fontname="helvetica"]`;
 
   result += renderConcepts(concepts);
   result += renderPapers(papers);
