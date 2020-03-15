@@ -175,7 +175,10 @@ function renderEdges(papers) {
     'extends': 'solid',
     'uses':    'dashed'
   };
-  let result = '';
+
+  const conceptEdges = new Map();
+  const nonConceptEdges = new Map();
+
   for (const paper of papers) {
     if (!paper.edges) {
       continue;
@@ -192,12 +195,38 @@ function renderEdges(papers) {
         label = `label = "${edge.label}",`
       }
 
-      result += `
+      const edgeViz = `
         "${edge.target}" -> "${paper.id}" [
           ${label}
           style = "${style}"
-        ]
-        `;
+        ]\n`;
+
+
+      const edgeId = `${edge.target}" -> "${paper.id}"`;
+      if (edge.type === 'concept') {
+        if (conceptEdges.has(edgeId)) {
+          console.log(`Redundant edge: ${edgeId}`);
+        }
+        conceptEdges.set(edgeId, edgeViz);
+      } else {
+        if (!nonConceptEdges.has(edgeId)) {
+          nonConceptEdges.set(edgeId, []);
+        }
+        nonConceptEdges.get(edgeId).push(edgeViz);
+      }
+    }
+  }
+
+  let result = '';
+  for (const edgeList of nonConceptEdges.values()) {
+    for (const edgeViz of edgeList) {
+      result += edgeViz;
+    }
+  }
+  for (const [edgeId, edgeViz] of conceptEdges.entries()) {
+    // Avoid drawing a redundant edge based on concept relationship
+    if (!nonConceptEdges.has(edgeId)) {
+      result += edgeViz;
     }
   }
   return result;
@@ -208,10 +237,10 @@ function renderToDot(papers, concepts) {
   node [shape = "box"]`;
 
   result += renderConcepts(concepts);
-  result += renderEdges(Object.values(concepts));
-
   result += renderPapers(papers);
-  result += renderEdges(papers);
+
+  const edges = Object.values(concepts).concat(papers);
+  result += renderEdges(edges);
 
   result += '}';
   return result;
