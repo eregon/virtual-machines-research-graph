@@ -297,7 +297,12 @@ function triggerRender() {
 
 Promise.all([dataPromise, triggerRenderP]).then(function(values) {
   const dot = convertToDot(values[0]);
+  const graphElem = document.getElementById('graph');
+  const maxWidth = graphElem.clientWidth;
   graphviz
+    .fit(true)
+    .width(maxWidth)
+    .height(window.innerHeight / 2)
     .renderDot(dot)
     .on("end", enableHover);
 });
