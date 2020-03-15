@@ -289,13 +289,11 @@ function convertToDot(bibtex) {
   return renderToDot(papers, concepts);
 }
 
+const bibUrl = document.location.hostname.indexOf('github') === -1
+  ? 'vm.bib'
+  : 'https://raw.githubusercontent.com/eregon/virtual-machines-research-graph/master/vm.bib';
 
-// const dataPromise = fetch('https://raw.githubusercontent.com/eregon/virtual-machines-research-graph/master/vm.bib')
-//   .then((response) => {
-//     return response.text();
-//   });
-
-const dataPromise = fetch('vm.bib')
+const dataPromise = fetch(bibUrl)
   .then((response) => {
     return response.text();
   });
