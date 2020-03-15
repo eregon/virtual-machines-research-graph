@@ -20,9 +20,12 @@
   <a href="https://github.com/eregon/virtual-machines-research-graph/edit/master/graph.dot">Edit on GitHub</a>
   </p>
 <div id="graph" style="text-align: center;"></div>
+<div id="bibentry"></div>
 <script>
 //@ts-check
 'use strict';
+
+let bibEntries = null;
 
 function extractConcepts(p, paper, concepts) {
   if (!paper.entryTags['vm:concepts']) {
@@ -248,6 +251,7 @@ function renderToDot(papers, concepts) {
 
 function convertToDot(bibtex) {
   const entries = bibtexParse.toJSON(bibtex);
+  bibEntries = entries;
   const {papers, concepts} = getPapersAndConcepts(entries);
   return renderToDot(papers, concepts);
 }
@@ -285,7 +289,39 @@ function triggerRender() {
 
 Promise.all([dataPromise, triggerRenderP]).then(function(values) {
   const dot = convertToDot(values[0]);
-  graphviz.renderDot(dot);
+  graphviz
+    .renderDot(dot)
+    .on("end", enableHover);
 });
+
+function showBibEntry(node) {
+    const bibKey = node.key;
+    for (const e of bibEntries) {
+      if (e.citationKey === bibKey) {
+        const data = e.entryTags;
+        const doi = data.doi ? ` (<a href="https://doi.org/${data.doi}">${data.doi}</a>)` : '';
+
+        let result = `
+        <p><a href="${data.url}">${data.title}</a><br>
+        ${data.author}
+        </p>`;
+
+        result += `<div class="series-doi">${data.series}${doi}</div>`;
+
+        if (data.abstract) {
+          result += `<div class="abstract">${data.abstract}</div>`;
+        }
+
+        document.getElementById('bibentry').innerHTML = result;
+      }
+    }
+  }
+
+function enableHover() {
+  let nodes = d3.selectAll('.node');
+  nodes.on("click", showBibEntry);
+  nodes.on("mouseover", showBibEntry);
+}
 </script>
+</body>
 </html>
