@@ -35,7 +35,8 @@
   vm:shortTitle = {SELF & Maps},
   vm:edge:uses = {
     Deutsch:1984:IC + compilation;
-    Compilation + method JIT}
+    Compilation + method JIT},
+  vm:edge:extends = {ObjectRepresentation + efficient access and lower memory footprint}
 }
 
 @inproceedings{Hoelzle:91:PIC,
@@ -321,8 +322,7 @@ Though there has been considerable research on improving the efficiency of just-
 
   vm:shortTitle = {Truffle Object Model},
   vm:edge:extends = {
-    Chambers:89:Self + unboxed values, read-only & type specialization;
-    ObjectRepresentation + efficient access and lower memory footprint}
+    Chambers:89:Self + unboxed values, read-only & type specialization}
 }
 
 @inproceedings{Duboscq:2014:SWR,
