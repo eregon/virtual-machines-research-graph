@@ -12,7 +12,7 @@
   year = 1984,
   url = "http://web.cs.ucla.edu/~palsberg/course/cs232/papers/DeutschSchiffman-popl84.pdf",
 
-  vm:concepts = {Lookup Caches, Interpretation},
+  vm:concepts = {Interpretation},
   vm:shortTitle = {Inline Caches}
 }
 
@@ -54,7 +54,6 @@
   year = 1991,
   url = {http://bibliography.selflanguage.org/_static/pics.pdf},
 
-  vm:concepts = {Lookup Caches},
   vm:shortTitle = {Polymorphic Inline Caches},
   vm:edge:extends = {Deutsch:1984:IC + k-size cache}
 }
@@ -126,6 +125,7 @@
   url = "https://www.complang.tuwien.ac.at/andi/bala.pdf",
 
   vm:shortTitle = {Trace-based JIT},
+  vm:concepts = {Compilation},
   vm:edge:extends = {Compilation trace JIT}
 }
 
@@ -141,9 +141,7 @@
   url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.5846&rep=rep1&type=pdf},
   year = 2002,
 
-  vm:concepts = {
-    Garbage Collection,
-    Tracking Reachability to Reduce Synchronization},
+  #vm:concepts = {Tracking Reachability to Reduce Synchronization},
   vm:shortTitle = {Thread-Local Heaps and GC}
 }
 
@@ -362,7 +360,6 @@ For overhead-free runtime metaprogramming, we demonstrate that dispatch chains, 
   title = {Zero-Overhead Metaprogramming: Reflection and Metaobject Protocols Fast and without Compromises},
   year = 2015,
 
-  vm:concepts = {Lookup Caches, Metaobject Protocols},
   vm:shortTitle = {Dispatch Chains (Multidimensional Lookup Caches)},
   vm:edge:uses = {Wurthinger:2012:SOAST},
   vm:edge:extends = {Hoelzle:91:PIC + nested PICs, cache for metaprogramming}
@@ -383,6 +380,7 @@ For overhead-free runtime metaprogramming, we demonstrate that dispatch chains, 
   url = "https://drops.dagstuhl.de/opus/volltexte/2015/5219/pdf/9.pdf",
 
   vm:shortTitle = {Basic Block Versioning},
+  vm:concepts = {Compilation},
   vm:edge:extends = {Compilation basic-block JIT}
 }
 
@@ -416,7 +414,6 @@ demonstrate the large overhead that they incur.},
   year = 2015,
   url = "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf",
 
-  vm:concepts = {Safepoints},
   vm:shortTitle = {Guest-Language Safepoints}
 }
 
@@ -516,14 +513,11 @@ Thus, it can be a foundation for safe and efficient multithreaded VMs for a wide
   title = {Efficient and Thread-Safe Objects for Dynamically-Typed Languages},
   year = 2016,
 
-  vm:concepts = {VM Implementation Thread Safety},
   vm:shortTitle = {Thread-Safe Object Model},
   vm:edge:extends = {
     Domani:02:TLAB + self-specializing write barrier;
     Woss:14:TOM + thread safety},
-  vm:edge:uses = {
-    Marr:15:DC for efficient sharing;
-    Daloze:2015:GLS + global synchronization}
+  vm:edge:uses = {Marr:15:DC for efficient sharing}
 }
 
 @inproceedings{Marr:2016:AWFY,
@@ -565,7 +559,6 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
   url = {https://doi.org/10.1145%2F3133841.3133843},
   year = 2017,
 
-  vm:concepts = {Garbage Collection},
   vm:shortTitle = {Reachability for Dynamic Atomic Reference Counting},
   vm:edge:extends = {Daloze:2016:TSO + eliminate local refcounting}
 }
@@ -610,10 +603,8 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
   vm:shortTitle = {Synchronize Collections based on Reachability},
   vm:edge:extends = {
     Bolz:2013:SSC + thread safety;
-    Domani:02:TLAB + self-specializing write barrier;
     Daloze:2016:TSO + collections},
-  vm:edge:uses = {
-    Daloze:2015:GLS + global synchronization}
+  vm:edge:uses = {Daloze:2015:GLS}
 }
 
 @inproceedings{Choi:18:BRC,
@@ -626,7 +617,6 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
   url = {https://iacoma.cs.uiuc.edu/iacoma-papers/pact18.pdf},
   year = 2018,
 
-  vm:concepts = {Garbage Collection},
   vm:shortTitle = {Biased Reference Counting},
   vm:edge:similar = {Ungar:17:DA similar with bias towards a thread}
 }
@@ -645,6 +635,7 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
   url = "https://research.fb.com/wp-content/uploads/2018/04/hhvm-jit-a-profile-guided-region-based-compiler-for-php-and-hack.pdf",
 
   vm:shortTitle = {Region-based JIT},
+  vm:concepts = {Compilation},
   vm:edge:extends = {Compilation region JIT}
 }
 
@@ -667,7 +658,6 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
   volume = 134,
   year = 2019,
 
-  vm:concepts = {Optimization, Gradual Typing},
   vm:shortTitle = {Optimizing Gradual Typing on GraalVM},
   vm:edge:uses = {Woss:14:TOM;Marr:15:DC}
 }
@@ -689,16 +679,4 @@ This paper presents 14 benchmarks and a novel methodology to assess the compiler
 
   vm:shortTitle = {Type Freezing Maps},
   vm:edge:extends = {Woss:14:TOM + nested type freezing}
-}
-
-@concept{Execution,
-  vm:shortTitle = {Execution Techniques}
-}
-
-@concept{Interpretation,
-  vm:concepts = {Execution}
-}
-
-@concept{Compilation,
-  vm:concepts = {Execution}
 }
