@@ -16,37 +16,9 @@ body {
 
 <body>
 <div id="graph" style="text-align: center;"></div>
-<div id="bibentry"></div>
 <script>
 //@ts-check
 'use strict';
-
-let bibEntries = null;
-
-function initBibEntries(entries, bibtex) {
-  bibEntries = new Map();
-
-  const lines = bibtex.split('\n');
-
-  let currentLine = -1;
-
-  for (const e of entries) {
-    if (e.entryType === "COMMENT") {
-      continue;
-    }
-
-    bibEntries.set(e.citationKey, e);
-
-    let found = false;
-    while (!found && (currentLine + 1) < lines.length) {
-      currentLine += 1;
-      if (lines[currentLine].indexOf(e.citationKey) !== -1) {
-        e.line = currentLine + 1; // +1 for the 1-based indexing
-        break;
-      }
-    }
-  }
-}
 
 function extractConcepts(p, paper, concepts) {
   if (!paper.entryTags['vm:concepts']) {
@@ -290,12 +262,6 @@ const dataPromise = fetch(bibUrl)
 
 var dotIndex = 0;
 var graphviz = d3.select("#graph").graphviz()
-    .transition(function () {
-        return d3.transition("main")
-            .ease(d3.easeLinear)
-            .delay(100)
-            .duration(500);
-    })
     .logEvents(true)
     .on("initEnd", triggerRender);
 
@@ -315,65 +281,9 @@ Promise.all([dataPromise, triggerRenderP]).then(function(values) {
   graphviz
     .fit(true)
     .width(maxWidth)
-    .height(window.innerHeight / 2)
-    .renderDot(dot)
-    .on("end", enableHover);
+    .height(window.innerHeight)
+    .renderDot(dot);
 });
-
-function toBibTex(entry) {
-  let bib = '';
-  bib += "@" + entry.entryType;
-  bib += '{';
-  if (entry.citationKey) {
-    bib += `<a href="https://github.com/smarr/virtual-machines-research-graph/blob/bibtex/vm.bib#L${entry.line}">${entry.citationKey}</a>,\n`;
-  }
-  if (entry.entry) {
-    bib += entry.entry;
-  }
-  if (entry.entryTags) {
-    let tags = '';
-    for (let jdx in entry.entryTags) {
-      if (tags.length != 0) {
-        tags += ',\n';
-      }
-      tags += '  ' + jdx + ' = {' + entry.entryTags[jdx] + '}';
-    }
-    bib += tags;
-  }
-  bib += '\n}';
-  return bib;
-};
-
-function showBibEntry(node) {
-  const bibKey = node.key;
-  const e = bibEntries.get(bibKey);
-
-  const data = e.entryTags;
-  const doi = data.doi ? ` (<a href="https://doi.org/${data.doi}">${data.doi}</a>)` : '';
-
-  let result = `
-  <p><a href="${data.url}">${data.title}</a><br>
-  ${data.author}
-  </p>`;
-
-  result += `<div class="series-doi">${data.series}${doi}</div>`;
-
-  if (data.abstract) {
-    result += `<div class="abstract">${data.abstract}</div>`;
-  }
-
-  const bibtex = toBibTex(e);
-
-  result += `<code><pre>${bibtex}</pre></code>`;
-
-  document.getElementById('bibentry').innerHTML = result;
-}
-
-function enableHover() {
-  let nodes = d3.selectAll('.node');
-  nodes.on("click", showBibEntry);
-  nodes.on("mouseover", showBibEntry);
-}
 </script>
 </body>
 </html>
