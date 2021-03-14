@@ -205,7 +205,7 @@
             "title": "Techniques and Applications for Guest-Language Safepoints",
             "year": "2015",
             "url": "https://eregon.me/blog/assets/research/guest-language-safepoints.pdf",
-            "vm:shortTitle": "Guest-Language Safepoints"
+            "vm:shortTitle": "Guest Safepoints"
         },
         "line": 173
     },
