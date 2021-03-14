@@ -270,7 +270,7 @@
             "year": "2018",
             "vm:shortTitle": "Synchronize Collections based on Reachability",
             "vm:edge:extends": "Bolz:2013:SSC + thread safety;\n    Daloze:2016:TSO + collections",
-            "vm:edge:uses": "Daloze:2015:GLS"
+            "vm:edge:uses": "Daloze:2015:GLS for migrating shared collections"
         },
         "line": 261
     },
