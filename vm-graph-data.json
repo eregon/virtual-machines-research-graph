@@ -247,7 +247,7 @@
             "publisher": "{ACM} Press",
             "series": "DLS'17",
             "title": "Dynamic Atomicity: Optimizing Swift Memory Management",
-            "url": "https://doi.org/10.1145%2F3133841.3133843",
+            "url": "https://doi.org/10.1145/3133841.3133843",
             "year": "2017",
             "vm:shortTitle": "Reachability for Dynamic Atomic Reference Counting",
             "vm:edge:extends": "Daloze:2016:TSO + eliminate local refcounting"
