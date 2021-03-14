@@ -142,9 +142,7 @@
             "title": "Storage Strategies for Collections in Dynamically Typed Languages",
             "year": "2013",
             "url": "https://tratt.net/laurie/research/pubs/html/bolz_diekmann_tratt__storage_strategies_for_collections_in_dynamically_typed_languages/",
-            "vm:concepts": "Collections Representation",
-            "vm:shortTitle": "Storage Strategies for Collections",
-            "vm:edge:extends": "CollectionsRepresentation + adapt representation dynamically to unboxed values"
+            "vm:shortTitle": "Storage Strategies for Collections"
         },
         "line": 111
     },
