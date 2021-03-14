@@ -5,7 +5,6 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/@hpcc-js/wasm@0.3.6/dist/index.min.js"></script>
   <script src="https://unpkg.com/d3-graphviz@3.0.0/build/d3-graphviz.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bibtex-parse-js@0.0.24/bibtexParse.js" integrity="sha256-v968ksKZppVegXgenPlIK/9mN80zJo1PXOCu+ao0lKw=" crossorigin="anonymous"></script>
 
 <style>
 body {
@@ -244,18 +243,19 @@ function renderToDot(papers, concepts) {
   return result;
 }
 
-function convertToDot(bibtex) {
-  const entries = bibtexParse.toJSON(bibtex);
-  initBibEntries(entries, bibtex);
+function convertToDot(json) {
+  // const entries = bibtexParse.toJSON(bibtex);
+  // console.log(entries);
+  const entries = JSON.parse(json);
   const {papers, concepts} = getPapersAndConcepts(entries);
   return renderToDot(papers, concepts);
 }
 
-const bibUrl = document.location.hostname.indexOf('github') === -1
-  ? 'vm.bib'
-  : 'https://raw.githubusercontent.com/eregon/virtual-machines-research-graph/master/vm.bib';
+const jsonUrl = document.location.hostname.indexOf('github') === -1
+  ? 'vm-graph-data.json'
+  : 'https://raw.githubusercontent.com/eregon/virtual-machines-research-graph/master/vm.bib#TODO';
 
-const dataPromise = fetch(bibUrl)
+const dataPromise = fetch(jsonUrl)
   .then((response) => {
     return response.text();
   });
